@@ -1,12 +1,31 @@
-# React + Vite
+# Task 2 – DevSecOps Pipeline with GitOps Integration
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This task enhances the existing CI/CD pipeline by integrating DevSecOps practices and GitOps-based deployment. The focus is on adding automated security checks, secure secret management, and continuous deployment to Kubernetes using Argo CD.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Enhancements
 
-## Expanding the ESLint configuration
+### Security Integration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Trivy**: Performs container and application vulnerability scanning during the build process.
+- **Sealed Secrets**: Manages Kubernetes secrets in a secure, encrypted format using kubeseal and controller.
+
+### GitOps-Based Deployment
+
+- **Argo CD**: Used to deploy applications to Kubernetes by continuously syncing manifests from a Git repository.
+- Enables fully declarative, version-controlled, and automated deployment.
+
+## Workflow Summary
+
+1. Developer pushes code to GitHub.
+2. CodePipeline triggers CodeBuild to:
+   - Build the application
+   - Run Trivy vulnerability scans
+   - Encrypt Kubernetes secrets
+3. Kubernetes manifests are pushed to a separate GitOps repository.
+4. **Argo CD** monitors that repo and automatically syncs changes to the cluster.
+
+## Outcome
+
+This task integrates security scanning and GitOps into a CI/CD pipeline using Trivy for vulnerability scanning and Sealed Secrets for managing sensitive data, while Argo CD automates deployment by syncing Kubernetes manifests from GitHub, ensuring a secure, reliable, and continuous delivery process with built-in application checks and Git-based deployment management.
